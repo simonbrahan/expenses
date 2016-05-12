@@ -24,4 +24,4 @@ def application(environ, start_response):
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
 
     start_response('200 OK', response_headers)
-    return [response_body]
+    return 'kebbles' #[response_body]
