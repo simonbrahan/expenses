@@ -12,7 +12,9 @@ import jinja2
 
 def application(environ, start_response):
 
-    response_body = environ['HOME']
+    thing = environ.items()
+
+    response_body = 'kebbles'
 
     response_headers = [('Content-Type', 'text/html'), ('Content-Length', str(len(response_body)))]
 
