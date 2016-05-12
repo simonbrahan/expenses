@@ -12,8 +12,7 @@ import jinja2
 from lib.expenses import expense
 
 def application(environ, start_response):
-    expense.getAll()
-    #grouped_expenses = expense.groupByDate(expense.getAll())
+    grouped_expenses = expense.groupByDate(expense.getAll())
 
     response_body = 'kebbles'
 
