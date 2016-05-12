@@ -7,33 +7,35 @@ try:
     execfile(virtualenv, dict(__file__=virtualenv))
 except IOError:
     pass
+#
+# IMPORTANT: Put any additional includes below this line.  If placed above this
+# line, it's possible required libraries won't be in your searchable path
+#
 
-'''
-import cgitb
-from lib.expenses import expense
-from cgi import FieldStorage
-import jinja2
+def application(environ, start_response):
 
-# Enable special cgi exception handling
-cgitb.enable()
+    ctype = 'text/plain'
+    if environ['PATH_INFO'] == '/health':
+        response_body = "1"
+    elif environ['PATH_INFO'] == '/env':
+        response_body = ['%s: %s' % (key, value)
+                    for key, value in sorted(environ.items())]
+        response_body = '\n'.join(response_body)
+    else:
+        ctype = 'text/html'
+        response_body = 'Hi'
 
-form = FieldStorage()
+    status = '200 OK'
+    response_headers = [('Content-Type', ctype), ('Content-Length', str(len(response_body)))]
+    #
+    start_response(status, response_headers)
+    return [response_body]
 
-if 'add_expense' in form.keys():
-    expense.add(
-        form['description'].value,
-        form['amount'].value,
-        form['applied_on'].value
-    )
-
-grouped_expenses = expense.groupByDate(expense.getAll())
-
-template_env = jinja2.Environment(
-    loader = jinja2.FileSystemLoader('/home/simon/webroot/www/expenses/templates')
-)'''
-
-print 'Status: 200 OK'
-print 'Content-Type: text/html\r\n'
-print 'hi'
-'''template = template_env.get_template('index.htm')
-print template.render({ 'grouped_expenses': grouped_expenses })'''
+#
+# Below for testing only
+#
+if __name__ == '__main__':
+    from wsgiref.simple_server import make_server
+    httpd = make_server('localhost', 8051, application)
+    # Wait for a single request, serve it and quit.
+    httpd.handle_request()
