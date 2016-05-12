@@ -3,8 +3,8 @@ import os
 
 def get():
     return psycopg2.connect(
-        database='expenses',
-        user='postgres',
-        password='postgres',
-        host='localhost'
+        database=os.environ['PGDATABASE'],
+        user=os.environ['OPENSHIFT_POSTGRESQL_DB_USERNAME'],
+        password=os.environ['OPENSHIFT_POSTGRESQL_DB_PASSWORD'],
+        host=os.environ['OPENSHIFT_POSTGRESQL_DB_HOST']
     )

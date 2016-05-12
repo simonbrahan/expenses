@@ -11,10 +11,9 @@ except IOError:
 import jinja2
 
 def application(environ, start_response):
+    grouped_expenses = expense.groupByDate(expense.getAll())
 
-    thing = ['%s: %s' % (key, value) for key, value in sorted(environ.items())]
-
-    response_body = '\n'.join(thing)
+    response_body = 'kebbles'
 
     response_headers = [('Content-Type', 'text/html'), ('Content-Length', str(len(response_body)))]
 
