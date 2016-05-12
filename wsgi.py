@@ -10,7 +10,7 @@ except IOError:
 
 def application(environ, start_response):
     ctype = 'text/html'
-    response_body = type(environ)
+    response_body = 'kebbles'
 
     status = '200 OK'
     response_headers = [('Content-Type', ctype), ('Content-Length', str(len(response_body)))]
