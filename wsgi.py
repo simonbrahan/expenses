@@ -8,10 +8,20 @@ try:
 except IOError:
     pass
 
+import cgi
 import jinja2
 from lib.expenses import expense
 
 def application(environ, start_response):
+    form = cgi.FieldStorage()
+
+    if 'add_expense' in form.keys():
+        expense.add(
+            form['description'].value,
+            form['amount'].value,
+            form['applied_on'].value
+        )
+
     grouped_expenses = expense.groupByDate(expense.getAll())
 
     template_env = jinja2.Environment(
