@@ -15,13 +15,9 @@ from lib.expenses import expense
 def application(environ, start_response):
     form = cgi.FieldStorage()
 
-    if 'add_expense' in form.keys():
-        cgi.kebbles()
-        expense.add(
-            form['description'].value,
-            form['amount'].value,
-            form['applied_on'].value
-        )
+    response_body = ''
+    for key in form.keys():
+        response_body += key
 
     grouped_expenses = expense.groupByDate(expense.getAll())
 
@@ -30,7 +26,9 @@ def application(environ, start_response):
     )
 
     template = template_env.get_template('index.htm')
-    response_body = template.render({ 'grouped_expenses': grouped_expenses }).encode('utf-8')
+    response_body += template.render({ 'grouped_expenses': grouped_expenses })
+
+    response_body.encode('utf-8')
 
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
 
