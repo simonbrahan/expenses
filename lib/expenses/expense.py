@@ -2,6 +2,7 @@ import dbconn
 
 
 def getAll():
+    return 'kebbles'
     conn = dbconn.get()
     cursor = conn.cursor()
     cursor.execute(
