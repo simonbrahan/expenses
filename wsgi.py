@@ -15,8 +15,7 @@ from lib.expenses import expense
 def application(environ, start_response):
     form = cgi.FieldStorage()
 
-    for item in form.items():
-        return item.encode('utf-8')
+    return type(form).encode('utf-8')
 
     grouped_expenses = expense.groupByDate(expense.getAll())
 
