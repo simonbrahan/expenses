@@ -12,7 +12,7 @@ import jinja2
 
 def application(environ, start_response):
 
-    response_body = ['%s: %s' % (key, value) for key, value in environ.items()]
+    response_body = environ['HOME']
 
     response_headers = [('Content-Type', 'text/html'), ('Content-Length', str(len(response_body)))]
 
