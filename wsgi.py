@@ -9,6 +9,7 @@ except IOError:
     pass
 
 import jinja2
+from lib.expenses import expense
 
 def application(environ, start_response):
     grouped_expenses = expense.groupByDate(expense.getAll())
