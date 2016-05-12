@@ -14,7 +14,12 @@ from lib.expenses import expense
 def application(environ, start_response):
     grouped_expenses = expense.groupByDate(expense.getAll())
 
-    response_body = 'kebbles'
+    template_env = jinja2.Environment(
+        loader = jinja2.FileSystemLoader(environ['DOCUMENT_ROOT'] + 'templates')
+    )
+
+    template = template_env.get_template('index.htm')
+    response_body = template.render({ 'grouped_expenses': grouped_expenses })
 
     response_headers = [('Content-Type', 'text/html'), ('Content-Length', str(len(response_body)))]
 
