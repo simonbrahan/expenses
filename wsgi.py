@@ -12,7 +12,7 @@ import jinja2
 
 def application(environ, start_response):
 
-    thing = environ.items()
+    thing = ['%s: %s' % (key, value) for key, value in environ.items()]
 
     response_body = 'kebbles'
 
