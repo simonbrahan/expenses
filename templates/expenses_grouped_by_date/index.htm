@@ -1,0 +1,5 @@
+<ul>
+{% for applied_on, expenses in grouped_expenses %}
+    {% include 'expenses_grouped_by_date/group.htm' %}
+{% endfor %}
+</ul>

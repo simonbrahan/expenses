@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <base href="http://localhost/expenses/">
+        <title>Expenses</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="static/js/add_expense_form.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row bg-primary">
+                <h1>Expenses Tracker</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Add Expense</h2>
+                    {% include 'add_expense_form.htm' %}
+                </div>
+                <div class="col-md-4">
+                    <h2>Expenses List</h2>
+                    {% include 'expenses_grouped_by_date/index.htm' %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

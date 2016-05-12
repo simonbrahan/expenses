@@ -1,0 +1,9 @@
+<h3>{{ applied_on }}</h3>
+{% for expense in expenses %}
+    <li>
+        <ul class="list-unstyled">
+            <li>&pound;{{ '{0:.2f}'.format(expense['amount']) }}</li>
+            <li>{{ expense['description'] }}</li>
+        </ul>
+    </li>
+{% endfor %}
