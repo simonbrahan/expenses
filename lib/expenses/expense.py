@@ -4,13 +4,13 @@ import dbconn
 def getAll():
     conn = dbconn.get()
 
-    return 'kebbles'
     cursor = conn.cursor()
     cursor.execute(
         """select amount, description, applied_on from expense
            order by applied_on desc limit 10"""
     )
 
+    return 'kebbles'
     column_names = ['amount', 'description', 'applied_on']
 
     expenses = []
