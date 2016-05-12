@@ -16,6 +16,7 @@ def application(environ, start_response):
     form = cgi.FieldStorage()
 
     if 'add_expense' in form.keys():
+        cgi.kebbles()
         expense.add(
             form['description'].value,
             form['amount'].value,
