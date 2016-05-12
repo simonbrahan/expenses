@@ -8,9 +8,17 @@ try:
 except IOError:
     pass
 
+import jinja2
+
 def application(environ, start_response):
     ctype = 'text/html'
-    response_body = type(environ)
+
+    template_env = jinja2.Environment(
+        loader = jinja2.FileSystemLoader('templates')
+    )
+
+    template = template_env.get_template('index.htm')
+    response_body = template.render()
 
     status = '200 OK'
     response_headers = [('Content-Type', ctype), ('Content-Length', str(len(response_body)))]
