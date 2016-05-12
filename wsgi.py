@@ -22,7 +22,8 @@ def application(environ, start_response):
     response_body = template.render({ 'grouped_expenses': grouped_expenses }).encode('utf-8')
 
     response_body += '<!--\n'
-    response_body += str(environ['wsgi.input'])
+    env_vars = ['%s: %s' % (key, value) for key, value in sorted(environ.items())]
+    response_body += '\n'.join(env_vars)
     response_body += '-->'
 
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
