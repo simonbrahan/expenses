@@ -8,12 +8,6 @@ try:
 except IOError:
     pass
 
-import cgitb
-from lib.expenses import expense
-from cgi import FieldStorage
-import jinja2
-
-
 def application(environ, start_response):
     ctype = 'text/html'
     response_body = type(environ)
