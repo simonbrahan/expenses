@@ -8,6 +8,8 @@ try:
 except IOError:
     pass
 
+import jinja2
+
 def application(environ, start_response):
     ctype = 'text/html'
 
