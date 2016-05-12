@@ -2,8 +2,9 @@ import dbconn
 
 
 def getAll():
-    return 'kebbles'
     conn = dbconn.get()
+
+    return 'kebbles'
     cursor = conn.cursor()
     cursor.execute(
         """select amount, description, applied_on from expense
