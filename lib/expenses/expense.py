@@ -10,7 +10,6 @@ def getAll():
            order by applied_on desc limit 10"""
     )
 
-    return 'kebbles'
     column_names = ['amount', 'description', 'applied_on']
 
     expenses = []
