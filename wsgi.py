@@ -14,7 +14,7 @@ def application(environ, start_response):
 
     thing = ['%s: %s' % (key, value) for key, value in environ.items()]
 
-    response_body = 'kebbles'
+    response_body = thing
 
     response_headers = [('Content-Type', 'text/html'), ('Content-Length', str(len(response_body)))]
 
