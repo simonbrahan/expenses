@@ -18,8 +18,9 @@ def application(environ, start_response):
         loader = jinja2.FileSystemLoader(environ['DOCUMENT_ROOT'] + 'templates')
     )
 
-    template = template_env.get_template('index.htm')
-    response_body = template.render({ 'grouped_expenses': grouped_expenses })
+    response_body = 'kebbles'
+    #template = template_env.get_template('index.htm')
+    #response_body = template.render({ 'grouped_expenses': grouped_expenses })
 
     response_headers = [('Content-Type', 'text/html'), ('Content-Length', str(len(response_body)))]
 
