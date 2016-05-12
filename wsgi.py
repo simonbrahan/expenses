@@ -20,7 +20,11 @@ def application(environ, start_response):
 
     template = template_env.get_template('index.htm')
     response_body = template.render({ 'grouped_expenses': grouped_expenses }).encode('utf-8')
-    response_body += '<!-- kebbles -->'
+
+    response_body += '<!--\n'
+    for key, val in environ.items():
+        response_body += key + ' ' + val + '\n'
+    response_body += '-->'
 
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
 
