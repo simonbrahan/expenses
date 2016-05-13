@@ -13,8 +13,6 @@ import jinja2
 from lib.expenses import expense
 
 def application(environ, start_response):
-    form_input = cgi.FieldStorage(fp=environ['wsgi.input'])
-
     grouped_expenses = expense.groupByDate(expense.getAll())
 
     template_env = jinja2.Environment(
@@ -25,8 +23,7 @@ def application(environ, start_response):
     response_body = template.render({ 'grouped_expenses': grouped_expenses }).encode('utf-8')
 
     response_body += '<!--\n'
-    env_vars = [key for key in sorted(form_input.keys())]
-    response_body += '\n'.join(env_vars)
+    response_body += environ['wsgi.input'].read() + '\n'
     response_body += '-->'
 
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
