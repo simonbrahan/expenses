@@ -17,6 +17,12 @@ def application(environ, start_response):
     grouped_expenses = expense.groupByDate(expense.getAll())
 
     post_body = urlparse.parse_qs(environ['wsgi.input'].read())
+    if 'add_expense' in post_body.keys():
+        expense.add(
+            post_body['description'][0],
+            post_body['amount'][0],
+            post_body['applied_on'][0]
+        )
 
     template_env = jinja2.Environment(
         loader = jinja2.FileSystemLoader(environ['DOCUMENT_ROOT'] + 'templates')
@@ -24,11 +30,6 @@ def application(environ, start_response):
 
     template = template_env.get_template('index.htm')
     response_body = template.render({ 'grouped_expenses': grouped_expenses }).encode('utf-8')
-
-    response_body += '<!--\n'
-    for key, value in post_body.items():
-        response_body += key + ' - ' +  ' '.join(value) + '\n'
-    response_body += '-->'
 
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
 
