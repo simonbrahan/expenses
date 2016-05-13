@@ -9,11 +9,14 @@ except IOError:
     pass
 
 import cgi
+import urlparse
 import jinja2
 from lib.expenses import expense
 
 def application(environ, start_response):
     grouped_expenses = expense.groupByDate(expense.getAll())
+
+    post_body = urlparse.parse_qs(environ['wsgi.input'].read())
 
     template_env = jinja2.Environment(
         loader = jinja2.FileSystemLoader(environ['DOCUMENT_ROOT'] + 'templates')
@@ -23,7 +26,8 @@ def application(environ, start_response):
     response_body = template.render({ 'grouped_expenses': grouped_expenses }).encode('utf-8')
 
     response_body += '<!--\n'
-    response_body += environ['wsgi.input'].read() + '\n'
+    for key, value in post_body.items():
+        response_body += key + ' '.join(value) + '\n'
     response_body += '-->'
 
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
