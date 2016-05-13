@@ -14,8 +14,6 @@ import jinja2
 from lib.expenses import expense
 
 def application(environ, start_response):
-    grouped_expenses = expense.groupByDate(expense.getAll())
-
     post_body = urlparse.parse_qs(environ['wsgi.input'].read())
     if 'add_expense' in post_body.keys():
         expense.add(
@@ -23,6 +21,8 @@ def application(environ, start_response):
             post_body['amount'][0],
             post_body['applied_on'][0]
         )
+
+    grouped_expenses = expense.groupByDate(expense.getAll())
 
     template_env = jinja2.Environment(
         loader = jinja2.FileSystemLoader(environ['DOCUMENT_ROOT'] + 'templates')
