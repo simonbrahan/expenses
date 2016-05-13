@@ -27,7 +27,7 @@ def application(environ, start_response):
 
     response_body += '<!--\n'
     for key, value in post_body.items():
-        response_body += key + ' '.join(value) + '\n'
+        response_body += key + ' - ' +  ' '.join(value) + '\n'
     response_body += '-->'
 
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
