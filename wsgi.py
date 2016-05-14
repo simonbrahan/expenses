@@ -1,19 +1,24 @@
 #!/usr/bin/python
 import os
 
-virtenv = os.environ['OPENSHIFT_PYTHON_DIR'] + '/virtenv/'
-virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
-try:
-    execfile(virtualenv, dict(__file__=virtualenv))
-except IOError:
-    pass
+if 'OPENSHIFT_PYTHON_DIR' in os.environ.keys():
+    virtenv = os.environ['OPENSHIFT_PYTHON_DIR'] + '/virtenv/'
+    virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
+    try:
+        execfile(virtualenv, dict(__file__=virtualenv))
+    except IOError:
+        pass
 
 import cgi
 import urlparse
 import jinja2
+
+from lib.expenses import dbconn
 from lib.expenses import expense
 
 def application(environ, start_response):
+    dbconn.init(environ)
+
     post_body = urlparse.parse_qs(environ['wsgi.input'].read())
     if 'add_expense' in post_body.keys():
         expense.add(
