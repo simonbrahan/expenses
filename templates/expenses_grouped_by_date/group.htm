@@ -1,4 +1,4 @@
-<h3>{{ applied_on }}</h3>
+<h3>{{ applied_on.strftime('%d/%m/%y') }}</h3>
 {% for expense in expenses %}
     <li>
         <ul class="list-unstyled">
