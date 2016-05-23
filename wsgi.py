@@ -10,6 +10,7 @@ if 'OPENSHIFT_PYTHON_DIR' in os.environ.keys():
         pass
 
 import cgi
+import os.path
 import urlparse
 import jinja2
 
@@ -29,8 +30,9 @@ def application(environ, start_response):
 
     grouped_expenses = expense.groupByDate(expense.getAll())
 
+
     template_env = jinja2.Environment(
-        loader = jinja2.FileSystemLoader(environ['DOCUMENT_ROOT'] + 'templates')
+        loader = jinja2.FileSystemLoader(os.path.join(environ['DOCUMENT_ROOT'], 'templates'))
     )
 
     template = template_env.get_template('index.htm')
@@ -39,4 +41,6 @@ def application(environ, start_response):
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
 
     start_response('200 OK', response_headers)
+
+    return environ['DOCUMENT_ROOT'] + 'templates'
     return response_body
