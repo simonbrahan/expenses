@@ -42,5 +42,4 @@ def application(environ, start_response):
 
     start_response('200 OK', response_headers)
 
-    return environ['DOCUMENT_ROOT'] + 'templates'
     return response_body
