@@ -36,6 +36,7 @@ def groupByDate(expenses):
 
     return grouped_expenses
 
+
 def add(description, amount, applied_on):
     conn = dbconn.get()
     conn.cursor().execute(
@@ -44,3 +45,28 @@ def add(description, amount, applied_on):
         (amount, description, applied_on)
     )
     conn.commit()
+
+
+def getCategories():
+    conn = dbconn.get()
+
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+            select
+                lower(split_part(description, ' ', 1)) category,
+                sum(amount) as total
+        from expense
+        group by lower(split_part(description, ' ', 1))
+        order by total desc
+        """
+    )
+
+    column_names = ['category', 'total']
+
+    categories = []
+    for row in cursor.fetchall():
+        # Convert row list to dictionary with column names as keys
+        categories.append(dict(zip(column_names, row)))
+
+    return categories

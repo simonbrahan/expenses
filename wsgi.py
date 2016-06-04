@@ -42,6 +42,8 @@ def application(environ, start_response):
         { 'grouped_expenses': grouped_expenses , 'today': datetime.date.today() }
     ).encode('utf-8')
 
+    response_body = str(expense.getCategories())
+
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
 
     start_response('200 OK', response_headers)
