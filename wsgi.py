@@ -31,6 +31,7 @@ def application(environ, start_response):
 
     grouped_expenses = expense.groupByDate(expense.getAll())
 
+    category_totals = expense.getCategories()
 
     template_env = jinja2.Environment(
         loader = jinja2.FileSystemLoader(os.path.join(environ['DOCUMENT_ROOT'], 'templates'))
@@ -39,10 +40,8 @@ def application(environ, start_response):
     template = template_env.get_template('index.htm')
 
     response_body = template.render(
-        { 'grouped_expenses': grouped_expenses , 'today': datetime.date.today() }
+        { 'grouped_expenses': grouped_expenses , 'today': datetime.date.today(), 'category_totals': category_totals }
     ).encode('utf-8')
-
-    response_body = str(expense.getCategories())
 
     response_headers = [('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', str(len(response_body)))]
 

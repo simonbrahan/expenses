@@ -1,0 +1,8 @@
+<ul>
+{% for category_total in category_totals %}
+    <li>
+        &pound;{{ '{0:.2f}'.format(category_total['total']) }} -
+        {{ category_total['category'] }}
+    </li>
+{% endfor %}
+</ul>
