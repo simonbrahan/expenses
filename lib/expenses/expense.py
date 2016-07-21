@@ -16,7 +16,7 @@ def getAll():
     for row in cursor.fetchall():
         # Convert row list to dictionary with column names as keys
         expense = dict(zip(column_names, row))
-        expense['description'] = expense['description'].encode('utf-8')
+        expense['description'] = expense['description'].decode('utf-8')
         expenses.append(expense)
 
     return expenses
